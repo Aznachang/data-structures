@@ -7,7 +7,7 @@ var Queue = function() {
   // Implement the methods below
   var head = 0; 
   var tail = 0;
-  var size=0; //{1:'a', 2:'b'}
+  var size = 0; 
 
   someInstance.enqueue = function(value) {
    storage[tail] = value;
@@ -17,9 +17,8 @@ var Queue = function() {
   };
 
   someInstance.dequeue = function() {
-    if(size>0)
-    {
-      var data=storage[head];
+    if( size > 0 ) {
+      var data = storage[head];
        delete storage[head];
        head++;
        size--;
