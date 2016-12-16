@@ -16,7 +16,6 @@ treeMethods.addChild = function(value) {
   this.children.push(tree);
 };
 
-
 treeMethods.contains = function(target) {
   var result = false;
   var searchChild = function(child) {
@@ -31,6 +30,7 @@ treeMethods.contains = function(target) {
   }; 
   return searchChild(this);
 };
+
 
 
 /*
