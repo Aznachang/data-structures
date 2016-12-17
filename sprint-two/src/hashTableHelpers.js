@@ -12,8 +12,9 @@
 //   limitedArray.get(3); // returns 'hi'
 
 var LimitedArray = function(limit) {
-  var storage = [];
 
+  var storage = [];
+  
   var limitedArray = {};
   limitedArray.get = function(index) {
     checkLimit(index);
