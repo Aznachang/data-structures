@@ -9,7 +9,7 @@ var BinarySearchTree = function(value) {
 
 var instanceMethods = {};
 
-instanceMethods.insert = function(val) {
+instanceMethods.insert = function(val) { //O(log(n))
   if (this.value > val) {
     if (this.left === null) {
       this.left = BinarySearchTree(val);
@@ -24,7 +24,7 @@ instanceMethods.insert = function(val) {
     }
   }
 };
-instanceMethods.contains = function(val) {
+instanceMethods.contains = function(val) { //O(log(n))
  
  if (this.value === val) {
   return true;
@@ -37,7 +37,7 @@ instanceMethods.contains = function(val) {
  }
  return false;
 };
-instanceMethods.depthFirstLog = function(cb) {
+instanceMethods.depthFirstLog = function(cb) { //O(n)
   cb(this.value);
   if (this.left) {
     this.left.depthFirstLog(cb);

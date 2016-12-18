@@ -3,7 +3,7 @@ var LinkedList = function() {
   list.head = null;
   list.tail = null;
 
-  list.addToTail = function(value) {
+  list.addToTail = function(value) { //O(1)
     var node = Node(value);
     if (list.head === null) {
       list.head = node;
@@ -14,22 +14,22 @@ var LinkedList = function() {
     }
   };
 
-  list.removeHead = function() {
+  list.removeHead = function() { //O(1);
     var result = list.head;
     list.head = list.head.next;
     return result.value;
   };
 
-  list.contains = function(target) {
+  list.contains = function(target) { // O(n)
     var searchNode = function(obj) {
       if ( obj.value === target) {
         return true;
       } else if (obj.next) {
-        return searchNode(obj.next)
+        return searchNode(obj.next);
       } else {
         return false;
       }
-    }
+    };
     return searchNode(list.head);
   };
 

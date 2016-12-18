@@ -7,12 +7,12 @@ var Graph = function() {
 };
  
 // Add a node to the graph, passing in the node's value.
-Graph.prototype.addNode = function(node) {
+Graph.prototype.addNode = function(node) { //O(1)
   this.nodes.push(node);
 };
 
 // Return a boolean value indicating if the value passed to contains is represented in the graph.
-Graph.prototype.contains = function(node) {
+Graph.prototype.contains = function(node) { //O(n)
   for (var i = 0; i < this.nodes.length; i++) {
     if (this.nodes[i] === node) {
       return true;
@@ -22,20 +22,20 @@ Graph.prototype.contains = function(node) {
 };
 
 // Removes a node from the graph.
-Graph.prototype.removeNode = function(node) { // O(1)
+Graph.prototype.removeNode = function(node) { // O(n)
   var index = this.nodes.indexOf(node);
   this.nodes.splice(index, 1);
   for (var i = 0; i < this.edges.length; i++) {
     var index1 = this.edges.indexOf(obj);
     var obj = this.edges[i];
-     if (obj[node]) {
+      if (obj[node]) {
         this.edges.splice(index1, 1);
-     }
+      } 
   }
 };
 
 // Returns a boolean indicating whether two specified nodes are connected.  Pass in the values contained in each of the two nodes.
-Graph.prototype.hasEdge = function(fromNode, toNode) {
+Graph.prototype.hasEdge = function(fromNode, toNode) { //O(n)
   for (var i = 0; i < this.edges.length; i++) {
     var obj = this.edges[i];
     if (obj.hasOwnProperty(fromNode) && obj[fromNode] === toNode) {
