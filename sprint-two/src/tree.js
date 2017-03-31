@@ -31,7 +31,7 @@ treeMethods.contains = function(target) { // O(n);
   return searchChild(this);
 };
 
-Tree.prototype.removeChild = function(child) {
+Tree.removeChild = function(child) {
   var index = this.children.indexOf(child);
   if (index !== -1) {
     // remove the child
@@ -42,7 +42,7 @@ Tree.prototype.removeChild = function(child) {
 };
 
 // returns filtered [results] by traversing through tree recursively via Depth-First
-Tree.prototype.DFSelect = function(filter, depth, results) {
+Tree.DFSelect = function(filter, depth, results) {
   results = results || [];
   depth = depth || 0;
 
