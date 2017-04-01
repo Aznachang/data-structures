@@ -11,9 +11,40 @@ var Tree = function(value) {
 
 var treeMethods = {};
 
-treeMethods.addChild = function(value) { // O(1);
-  var tree = Tree(value);
-  this.children.push(tree);
+/**
+  * add an immediate child
+  * (wrap values in Tree nodes if they're not already)
+  */
+Tree.prototype.addChild = function(child) {
+  if (!child || !(child instanceof Tree)) {
+    child = new Tree(child);
+  }
+  if (!this.isDescendant(child)) {
+    this.children.push(child);
+  } else {
+    throw new Error('That child is already a child of this tree');
+  }
+  // return the new child node
+  return child;
+};
+
+/**
+  * check to see if the provided tree is already a child of this
+  * tree __or any of its sub trees__
+  */
+Tree.prototype.isDescendant = function(child) 
+  for (var i = 0; i < this.children.length; i++) {
+    if (this.children[i].value === child.value) {
+      return true;
+    }
+  }
+  for (var i = 0; i < this.children.length; i++) {
+    if (this.children[i].isDescendant(child)) {
+      // `child` is descendant of this tree
+      return true;
+    }
+  }
+  return false; 
 };
 
 treeMethods.contains = function(target) { // O(n);
