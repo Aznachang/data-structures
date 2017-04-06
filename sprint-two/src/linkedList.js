@@ -90,4 +90,4 @@ LinkedList.prototype.contains = function(target) {
 	} 
 
 	return false;
-};	
+};
