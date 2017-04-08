@@ -91,3 +91,36 @@ LinkedList.prototype.contains = function(target) {
 
 	return false;
 };
+
+// Add Two LinkedLists
+var addTwoNumbers = function(L1, L2) {
+	var L3 = new LinkedList();
+	var total;
+	var firstNode = L1.head;
+	var secondNode = L2.head;
+
+	if (L1.size > L2.size) {
+		curNode = L1.head;
+	} else if (L1.size < L2.size) {
+		curNode = L2.head;
+	} else {
+		curNode = L1.head;
+	}
+
+	while (curNode) {
+
+		if (firstNode.value === null || secondNode.value === null) {
+			L3.addToTail(curNode.value);
+			return L3;
+		}
+
+		total = firstNode.value + secondNode.value;
+		L3.addToTail(total);
+
+		curNode = curNode.next;
+		firstNode = firstNode.next;
+		secondNode = secondNode.next;
+	}
+
+	return L3;
+};
