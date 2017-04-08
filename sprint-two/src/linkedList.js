@@ -94,6 +94,7 @@ LinkedList.prototype.contains = function(target) {
 
 // Add Two LinkedLists
 var addTwoNumbers = function(L1, L2) {
+  // addition of L1, L2 LinkedList
 	var L3 = new LinkedList();
 	var total;
 	var firstNode = L1.head;
@@ -121,6 +122,5 @@ var addTwoNumbers = function(L1, L2) {
 		firstNode = firstNode.next;
 		secondNode = secondNode.next;
 	}
-
 	return L3;
 };
