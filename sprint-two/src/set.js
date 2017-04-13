@@ -21,7 +21,3 @@ Set.prototype.remove = function(item) { //O(n)
     }
   }
 };
-
-/*
- * Complexity: What is the time complexity of the above functions?
- */
