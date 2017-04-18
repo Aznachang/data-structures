@@ -92,6 +92,28 @@ LinkedList.prototype.contains = function(target) {
 	return false;
 };
 
+// rotate N-Nodes to the left
+LinkedList.prototype.rotateNth = function(n) {
+  var current = this.head;
+  var prev = this.head;
+  var first = true;
+
+  for (let i=0; i<n; i++) {
+  	if (first) {
+  		first = false;
+  	} else {
+  	  prev = current;
+  	}
+  	current = current.next;
+  }
+  
+  this.tail.next = this.head;
+  prev.next = null;
+  this.head = current;
+
+  return this.head;
+}
+
 // Add Two LinkedLists
 var addTwoNumbers = function(L1, L2) {
   // addition of L1, L2 LinkedList
