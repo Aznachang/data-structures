@@ -1,93 +1,99 @@
-var Tree = function(value) {
-  var newTree = {};
-  newTree.value = value;
-
-  // your code here
-  newTree.children = [];  // fix me
-  _.extend(newTree, treeMethods);
-
-  return newTree;
-};
-
-var treeMethods = {};
-
-/**
-  * add an immediate child
-  * (wrap values in Tree nodes if they're not already)
-  */
-Tree.prototype.addChild = function(child) {
-  if (!child || !(child instanceof Tree)) {
-    child = new Tree(child);
+class Tree {
+  constructor (value) {
+    this.children = [];
+    this.value = value;
   }
-  if (!this.isDescendant(child)) {
-    this.children.push(child);
-  } else {
-    throw new Error('That child is already a child of this tree');
-  }
-  // return the new child node
-  return child;
-};
 
-/**
-  * check to see if the provided tree is already a child of this
-  * tree __or any of its sub trees__
-  */
-Tree.prototype.isDescendant = function(child) 
-  for (var i = 0; i < this.children.length; i++) {
-    if (this.children[i].value === child.value) {
-      return true;
-    }
-  }
-  for (var i = 0; i < this.children.length; i++) {
-    if (this.children[i].isDescendant(child)) {
-      // `child` is descendant of this tree
-      return true;
-    }
-  }
-  return false; 
-};
-
-treeMethods.contains = function(target) { // O(n);
-  var result = false;
-  var searchChild = function(child) {
-    if (child.value === target) {
-      return true;
+  /**
+    * add an immediate child
+    */
+  addChild(child) {
+    // check if child is a descendant of the root parent
+    if (!this.isDescendant(child)) {
+      // push to [children]
+      this.children.push(child);
     } else {
-      for (var i = 0; i < child.children.length; i++) {
-        result = searchChild(child.children[i]);
+      throw new Error('This child is a descendant of root parent!');
+    }
+    return this;
+  };
+
+  /**
+    * check to see if the provided tree is already a child of this
+    * tree __or any of its sub trees__
+    */
+  isDescendant(child) {
+    // check all children one row level down
+    if (this.children.indexOf(child) !== -1) {
+      return true;
+    }
+
+    // recursive for-loop
+    for (let i=0; i<this.children.length;i++) {
+      if (this.children[i].isDescendant(child))
+        return true;
+    }
+
+    return false;
+  };
+
+  /**
+    * remove an immediate child
+    */
+  removeAnyChild(child) {
+    var index;
+
+    index = this.children.indexOf(child);
+
+    // base case 
+    if (index !== -1) {
+      this.children.splice(index, 1);
+      return true;
+    } 
+    // recursive
+    for (let i=0; i<this.children.length; i++) {
+      if (this.children[i].removeAnyChild(child)) {
+        // return each tree structure part back up to root tree node
+        return this;
       }
     }
-    return result;
-  }; 
-  return searchChild(this);
+
+    return null;
+  };
+
+  /**
+    * remove an immediate child
+    */
+  removeChild(child) {
+    if (this.children.length === 0) {
+      return this;
+    }
+
+    var index = this.children.indexOf(child) 
+    
+    if (index !== -1) {
+      this.children.splice(index, 1);
+    }
+
+    return this;
+  };
+
+	// returns filtered [results] by traversing through tree recursively via Depth-First
+	DFSelect(filter, depth, results) {
+		results = results || [];
+		depth = depth || 0;
+
+		if (filter(this.value, depth)) {
+			results.push(this.value);
+		}
+
+		for (var i = 0; i < this.children.length; i++) {
+			var child = this.children[i];
+			child.DFSelect(filter, depth + 1, results);
+		}
+		return results;
+	};
 };
-
-Tree.removeChild = function(child) {
-  var index = this.children.indexOf(child);
-  if (index !== -1) {
-    // remove the child
-    this.children.splice(index, 1);
-  } else {
-    throw new Error('That node is not an immediate child of this tree');
-  }
-};
-
-// returns filtered [results] by traversing through tree recursively via Depth-First
-Tree.DFSelect = function(filter, depth, results) {
-  results = results || [];
-  depth = depth || 0;
-
-  if (filter(this.value, depth)) {
-    results.push(this.value);
-  }
-
-  for (var i = 0; i < this.children.length; i++) {
-    var child = this.children[i];
-    child.DFSelect(filter, depth + 1, results);
-  }
-  return results;
-};
-
 /*
  * Complexity: What is the time complexity of the above functions?
  */  
