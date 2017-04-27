@@ -1,53 +1,60 @@
-var BinarySearchTree = function(value) {
-  var instances = {};
-  instances.value = value;
-  instances.right = null;
-  instances.left = null;
-  _.extend(instances, instanceMethods);
-  return instances;
-};
+class BinarySearchTree {
 
-var instanceMethods = {};
+	constructor(val) {
+	  this.value = val;
+	  this.left = null;
+	  this.right = null;
+	}
 
-instanceMethods.insert = function(val) { //O(log(n))
-  if (this.value > val) {
-    if (this.left === null) {
-      this.left = BinarySearchTree(val);
-    } else {
-      this.left.insert(val);
-    }
-  } else if (this.value < val) {
-    if (this.right === null ) {
-      this.right = BinarySearchTree(val);
-    } else {
-      this.right.insert(val);
-    }
-  }
-};
-instanceMethods.contains = function(val) { //O(log(n))
- 
- if (this.value === val) {
-  return true;
-  //'target val' is greater than 'current node value'
- } else if (this.right && this.value < val) {
-  return this.right.contains(val);
-  //'target val' is less than 'current node value'
- } else if (this.left && this.value > val) {
-   return this.left.contains(val);
- }
- return false;
-};
-instanceMethods.depthFirstLog = function(cb) { //O(n)
-  cb(this.value);
-  if (this.left) {
-    this.left.depthFirstLog(cb);
-  } else if (this.right) {
-    this.right.depthFirstLog(cb);
-  }
-};
- 
+	insert(val) {
+		// # to insert < currNode's value
+		if (val <= this.value) {
+			// leftNode val does not exist
+			if (this.left === null) {
+				this.left = new BinarySearchTree(val)
+			// if 'leftNode' val exists
+			} else {
+				// go to leftNode and check whether can insert to its left/right side
+				this.left.insert(val);
+			}
+			// # to insert > currNode's value
+		} else if (val > this.value) {
+			// rightNode val does not exist
+			if (this.right === null) {
+				this.right = new BinarySearchTree(val)
+			// if 'leftNode' val exists
+			} else {
+				// go to rightNode and check whether can insert to its left/right side
+				this.right.insert(val);
+			}
+		}
+	};
 
-/*
- * Complexity: What is the time complexity of the above functions?
- */
- 
+	contains(target) {
+		if (this.value === target) {
+			return true;
+			// check to see if left exists and target is < currNode's value
+		} else if (this.left && target < this.value) {
+			// see if leftChildNode === target
+			this.left.contains(target);
+			//check to see if right exists and target is greater than currNode
+		} else if (this.right && target > this.value) {
+			// see if rightChildNode === target
+			this.right.contains(target);
+		}
+		return false;
+	};
+
+	// apply callback depthFirst
+	depthFirst(cb) {
+		// first do callback on currBSTNode
+		cb(this.value);
+		// check currBSTNode for left/right childNodes
+		// if - check for leftmost first  
+		if (this.left) {
+			this.left.depthFirst(cb);
+		} else {
+			this.right.depthFirst(cb);
+		}
+	}
+};
