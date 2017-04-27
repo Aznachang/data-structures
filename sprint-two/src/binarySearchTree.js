@@ -44,7 +44,7 @@ class BinarySearchTree {
 		}
 		return false;
 	};
-
+  
 	// apply callback depthFirst
 	depthFirst(cb) {
 		// first do callback on currBSTNode
